@@ -14,13 +14,17 @@ function setNextFrame(obj: any, prop: string, val: any): void {
   nextFrame(function() { obj[prop] = val; });
 }
 
+// 更新样式
 function updateStyle(oldVnode: VNode, vnode: VNode): void {
-  var cur: any, name: string, elm = vnode.elm,
+  var cur: any,
+      name: string,
+      elm = vnode.elm,
       oldStyle = (oldVnode.data as VNodeData).style,
       style = (vnode.data as VNodeData).style;
 
   if (!oldStyle && !style) return;
   if (oldStyle === style) return;
+
   oldStyle = oldStyle || {} as VNodeStyle;
   style = style || {} as VNodeStyle;
   var oldHasDel = 'delayed' in oldStyle;
@@ -53,6 +57,7 @@ function updateStyle(oldVnode: VNode, vnode: VNode): void {
   }
 }
 
+// 移除销毁样式
 function applyDestroyStyle(vnode: VNode): void {
   var style: any, name: string, elm = vnode.elm, s = (vnode.data as VNodeData).style;
   if (!s || !(style = s.destroy)) return;
@@ -61,6 +66,7 @@ function applyDestroyStyle(vnode: VNode): void {
   }
 }
 
+// 移除样式
 function applyRemoveStyle(vnode: VNode, rm: () => void): void {
   var s = (vnode.data as VNodeData).style;
   if (!s || !s.remove) {
