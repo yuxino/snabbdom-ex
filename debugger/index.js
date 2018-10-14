@@ -22,10 +22,9 @@ var vnode = h(
   {
     on: { click: () => console.log("on click") },
     class: { a: true },
-    style: { color: 'pink' }
   },
   [
-    h("span", { style: { fontWeight: "bold" } }, "This is bold"),
+    h("span", { style: { fontWeight: "bold", transition: 'opacity 1s' , remove: { opacity: '0'} } }, "This is bold"),
     " and this is just normal text",
     h("a", { props: { href: "/foo" } }, "I'll take you places!")
   ]
@@ -34,18 +33,14 @@ var vnode = h(
 // Patch into empty DOM element – this modifies the DOM as a side effect
 patch(container, vnode);
 
-// var newVnode = h(
-//   "div#container",
-//   { on: { click: () => console.log("oh my god") } },
-//   [
-//     h(
-//       "span",
-//       { style: { fontWeight: "normal", fontStyle: "italic" } },
-//       "This is now italic type"
-//     ),
-//     " and this is still just normal text",
-//     h("a", { props: { href: "/bar" } }, "I'll take you places!")
-//   ]
-// );
+var newVnode = h(
+  "div#container",
+  { on: { click: () => console.log("oh my god") } },
+  [
+    " and this is still just normal text",
+    h("a", { props: { href: "/bar" } }, "I'll take you places!")
+  ]
+);
+
 // // Second `patch` invocation
-// patch(vnode, newVnode); // Snabbdom efficiently updates the old view to the new state
+patch(vnode, newVnode); // Snabbdom efficiently updates the old view to the new state

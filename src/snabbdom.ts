@@ -69,7 +69,8 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     return vnode(api.tagName(elm).toLowerCase() + id + c, {}, [], undefined, elm);
   }
 
-  function createRmCb(childElm: Node, listeners: number) {
+  // 通过父级删除子元素
+  function createRmCb (childElm: Node, listeners: number) {
     return function rmCb() {
       if (--listeners === 0) {
         const parent = api.parentNode(childElm);
@@ -170,6 +171,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
   }
 
+  // 调用destroy 钩子的时候也需要触发 子组件的 destroy 钩子
   function invokeDestroyHook(vnode: VNode) {
     let i: any, j: number, data = vnode.data;
     if (data !== undefined) {
@@ -193,17 +195,22 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     for (; startIdx <= endIdx; ++startIdx) {
       let i: any, listeners: number, rm: () => void, ch = vnodes[startIdx];
       if (ch != null) {
+        // 普通的元素都有 selector
         if (isDef(ch.sel)) {
           invokeDestroyHook(ch);
           listeners = cbs.remove.length + 1;
           rm = createRmCb(ch.elm as Node, listeners);
+
           for (i = 0; i < cbs.remove.length; ++i) cbs.remove[i](ch, rm);
           if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
             i(ch, rm);
           } else {
             rm();
           }
-        } else { // Text node
+
+        }
+        // 没有的会被认为是文本节点
+        else { // Text node
           api.removeChild(parentElm, ch.elm as Node);
         }
       }

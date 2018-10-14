@@ -152,7 +152,8 @@ function post() {
       document.body.appendChild(oldElm);
       setNextFrame(oldStyle, 'transform', 'translate('+ -dx +'px, '+ -dy +'px) scale('+wRatio+', '+hRatio+')'); //scale must be on far right for translate to be correct
       setNextFrame(oldStyle, 'opacity', '0');
-      oldElm.addEventListener('transitionend', function (ev: TransitionEvent) {
+      oldElm.
+      addEventListener('transitionend', function (ev: TransitionEvent) {
         if (ev.propertyName === 'transform')
           document.body.removeChild(ev.target as Node);
       });
