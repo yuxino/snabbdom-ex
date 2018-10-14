@@ -1,17 +1,19 @@
 // write sth in here use es6 syntax
 import * as snabbdom from "src/snabbdom";
 
-import classModules from "src/modules/class"; // makes it easy to toggle classes
-import propsModules from "src/modules/props"; // for setting properties on DOM elements
-import styleModules from "src/modules/style"; // handles styling on elements with support for animations
-import listenersModules from "src/modules/eventlisteners"; // attaches event listeners
+import classModule from "src/Modules/class"; // makes it easy to toggle classes
+import propsModule from "src/Modules/props"; // for setting properties on DOM elements
+import styleModule from "src/Modules/style"; // handles styling on elements with support for animations
+import listenersModule from "src/Modules/eventlisteners"; // attaches event listeners
+import dataSetModule from 'src/Modules/dataset'
 
 var patch = snabbdom.init([
-  // Init patch function with chosen modules
-  classModules,
-  propsModules,
-  styleModules,
-  listenersModules
+  // Init patch function with chosen Module
+  classModule,
+  propsModule,
+  styleModule,
+  listenersModule,
+  dataSetModule
 ]);
 var h = snabbdom.h;
 
@@ -22,6 +24,7 @@ var vnode = h(
   {
     on: { click: () => console.log("on click") },
     class: { a: true },
+    dataset: {action: 'reset'}
   },
   [
     h("span", { style: { fontWeight: "bold", transition: 'opacity 1s' , remove: { opacity: '0'} } }, "This is bold"),
@@ -33,14 +36,14 @@ var vnode = h(
 // Patch into empty DOM element – this modifies the DOM as a side effect
 patch(container, vnode);
 
-var newVnode = h(
-  "div#container",
-  { on: { click: () => console.log("oh my god") } },
-  [
-    " and this is still just normal text",
-    h("a", { props: { href: "/bar" } }, "I'll take you places!")
-  ]
-);
+// var newVnode = h(
+//   "div#container",
+//   { on: { click: () => console.log("oh my god") } },
+//   [
+//     " and this is still just normal text",
+//     h("a", { props: { href: "/bar" } }, "I'll take you places!")
+//   ]
+// );
 
 // // Second `patch` invocation
-patch(vnode, newVnode); // Snabbdom efficiently updates the old view to the new state
+// patch(vnode, newVnode); // Snabbdom efficiently updates the old view to the new state

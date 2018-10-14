@@ -10,9 +10,7 @@ function updateClass(oldVnode: VNode, vnode: VNode): void {
       oldClass = (oldVnode.data as VNodeData).class,
       klass = (vnode.data as VNodeData).class;
 
-  console.log(oldClass, klass)
-
-    // oldClass && klass 不存在 不做操作
+  // oldClass && klass 不存在 不做操作
   // oldClass 额 klass 一致 不做操作
   if (!oldClass && !klass) return;
   if (oldClass === klass) return;
