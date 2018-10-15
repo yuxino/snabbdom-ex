@@ -48,6 +48,7 @@ function createListener() {
   }
 }
 
+// 更新绑定的事件
 function updateEventListeners(oldVnode: VNode, vnode?: VNode): void {
   var oldOn = (oldVnode.data as VNodeData).on,
       oldListener = (oldVnode as any).listener,

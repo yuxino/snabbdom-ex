@@ -223,22 +223,30 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
                           newCh: Array<VNode>,
                           insertedVnodeQueue: VNodeQueue) {
 
-    let oldStartIdx = 0, newStartIdx = 0;
-    let oldEndIdx = oldCh.length - 1;
+    // 开始
+    let oldStartIdx = 0;
+    let newStartIdx = 0;
 
-    let oldStartVnode = oldCh[0];
-    let oldEndVnode = oldCh[oldEndIdx];
+    // 结束
+    let oldEndIdx = oldCh.length - 1;
     let newEndIdx = newCh.length - 1;
 
+    // 旧的子元素首尾元素
+    let oldStartVnode = oldCh[0];
+    let oldEndVnode = oldCh[oldEndIdx];
+
+    // 新的子元素首尾元素
     let newStartVnode = newCh[0];
     let newEndVnode = newCh[newEndIdx];
 
     let oldKeyToIdx: any;
     let idxInOld: number;
 
+    // 需要被移动的元素
     let elmToMove: VNode;
     let before: any;
 
+    // 对比两个列表
     while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
       if (oldStartVnode == null) {
         oldStartVnode = oldCh[++oldStartIdx]; // Vnode might have been moved left

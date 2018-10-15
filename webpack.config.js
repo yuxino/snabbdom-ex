@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin') 
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -18,8 +18,18 @@ module.exports = {
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-      { test: /\.tsx?$/, loader: "ts-loader" }
-    ]
+      { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+              presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ],
   },
   plugins: [new HtmlWebpackPlugin({
       template: './debugger/index.html'
