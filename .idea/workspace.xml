@@ -3,12 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="eae00deb-26ac-461b-8cac-e666d6bdb7bd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/debugger/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/debugger/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/debugger/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/debugger/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/eventlisteners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/eventlisteners.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/h.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/h.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/h.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/h.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/h.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/h.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/class.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/class.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/eventlisteners.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/eventlisteners.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/eventlisteners.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/eventlisteners.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/hero.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/hero.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/hero.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/hero.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/style.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/style.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/style.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/snabbdom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/snabbdom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/snabbdom.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/snabbdom.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/snabbdom.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/snabbdom.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -73,102 +83,152 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="babelrc" value="6" />
-          <entry key="js" value="488" />
+          <entry key="html" value="6" />
+          <entry key="js" value="555" />
           <entry key="json" value="1" />
-          <entry key="ts" value="1106" />
+          <entry key="ts" value="2610" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="HTML" value="6" />
           <entry key="JSON" value="7" />
-          <entry key="JavaScript" value="488" />
-          <entry key="TypeScript" value="1106" />
+          <entry key="JavaScript" value="555" />
+          <entry key="TypeScript" value="2610" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="babelrc" value="2" />
+          <entry key="html" value="2" />
           <entry key="js" value="6" />
           <entry key="json" value="5" />
-          <entry key="ts" value="33" />
+          <entry key="ts" value="45" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="HTML" value="2" />
           <entry key="JSON" value="5" />
           <entry key="JavaScript" value="6" />
-          <entry key="TypeScript" value="33" />
+          <entry key="TypeScript" value="45" />
           <entry key="tsconfig" value="2" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/debugger/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-              <folding>
-                <element signature="e#36#77#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.babelrc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/debugger/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="345">
+                  <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#36#77#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/snabbdom.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="448">
+                  <caret line="279" column="7" lean-forward="true" selection-start-line="279" selection-start-column="7" selection-end-line="279" selection-end-column="7" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                    <element signature="e#36#76#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/debugger/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="144">
+                  <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/snabbdom.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="32">
+                  <caret line="229" column="25" selection-start-line="229" selection-start-column="11" selection-end-line="229" selection-end-column="25" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                    <element signature="e#36#76#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/vnode.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="256">
+                  <caret line="16" column="5" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="5" />
+                  <folding>
+                    <element signature="e#0#30#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/htmldomapi.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="296">
+                  <caret line="35" column="50" lean-forward="true" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MouseEvent</find>
-      <find>Document</find>
-      <find>transition</find>
-      <find>addEventListener(</find>
-      <find>all</find>
-      <find>amount</find>
-      <find>applyRemoveStyle</find>
-      <find>remov</find>
-      <find>rm</find>
-      <find>reflowForced</find>
-      <find>remove</find>
-      <find>destroy</find>
-      <find>createRmCb</find>
-      <find>Modules</find>
-      <find>console</find>
-      <find>CAPS</find>
-      <find>Hero</find>
-      <find>src/Module</find>
-      <find>handler</find>
-      <find>invokeHandler</find>
-      <find>create</find>
-      <find>updateEvent</find>
-      <find>updateEventLis</find>
-      <find>inv</find>
-      <find>handleEvent</find>
-      <find>createListener</find>
-      <find>listener</find>
-      <find>createLis</find>
       <find>es6</find>
       <find>babel</find>
+      <find>vnod</find>
+      <find>update</find>
+      <find>newEndVnode</find>
+      <find>api.nextSibling</find>
+      <find>nextSibling</find>
+      <find>data</find>
+      <find>vnode.data</find>
+      <find>isVnode</find>
+      <find>h</find>
+      <find>H</find>
+      <find>export {}</find>
+      <find>.data</find>
+      <find>text</find>
+      <find>.h</find>
+      <find>./h</find>
+      <find>sel</find>
+      <find>patch</find>
+      <find>parentNode</find>
+      <find>elm</find>
+      <find>emptyNodeAt</find>
+      <find>tagName</find>
+      <find>insertedVnodeQueue</find>
+      <find>appendChild</find>
+      <find>insertBefore</find>
+      <find>createElm</find>
+      <find>vnode</find>
+      <find>patchVnode</find>
+      <find>updateChildren</find>
     </findStrings>
     <replaceStrings>
       <replace>Module</replace>
@@ -186,11 +246,14 @@
         <option value="$PROJECT_DIR$/src/modules/class.ts" />
         <option value="$PROJECT_DIR$/src/modules/dataset.ts" />
         <option value="$PROJECT_DIR$/src/modules/eventlisteners.ts" />
-        <option value="$PROJECT_DIR$/src/snabbdom.ts" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/.babelrc" />
+        <option value="$PROJECT_DIR$/src/vnode.ts" />
+        <option value="$PROJECT_DIR$/src/h.ts" />
+        <option value="$PROJECT_DIR$/debugger/index.html" />
         <option value="$PROJECT_DIR$/debugger/index.js" />
+        <option value="$PROJECT_DIR$/src/snabbdom.ts" />
       </list>
     </option>
   </component>
@@ -210,7 +273,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1400" />
@@ -233,23 +296,6 @@
               <item name="snabbdom-ex" type="b2602c69:ProjectViewProjectNode" />
               <item name="snabbdom-ex" type="462c0819:PsiDirectoryNode" />
               <item name="debugger" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="snabbdom-ex" type="b2602c69:ProjectViewProjectNode" />
-              <item name="snabbdom-ex" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="snabbdom-ex" type="b2602c69:ProjectViewProjectNode" />
-              <item name="snabbdom-ex" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="snabbdom-ex" type="b2602c69:ProjectViewProjectNode" />
-              <item name="snabbdom-ex" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -305,20 +351,20 @@
       <updated>1539253112747</updated>
       <workItem from="1539253114285" duration="5287000" />
       <workItem from="1539364749175" duration="5016000" />
-      <workItem from="1539504512602" duration="13710000" />
+      <workItem from="1539504512602" duration="26090000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24013000" />
+    <option name="totallyTimeSpent" value="36393000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1400" height="1000" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49884528" visible="true" weight="0.24889868" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4902386" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" id="npm" order="2" sideWeight="0.5011547" side_tool="true" visible="true" weight="0.24889868" />
+      <window_info id="npm" order="2" sideWeight="0.5097614" side_tool="true" visible="true" weight="0.0" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -405,15 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vnode.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/snabbdom.bundle.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -423,17 +460,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/htmldomapi.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hooks.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/h.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modules/module.ts">
@@ -503,16 +530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modules/class.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="14" column="34" lean-forward="true" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -536,16 +553,6 @@
     <entry file="file://$PROJECT_DIR$/src/helpers/attachto.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/snabbdom.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="198" column="28" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
@@ -560,12 +567,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/modules/class.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="34" lean-forward="true" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/h.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vnode.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/debugger/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/htmldomapi.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="35" column="50" lean-forward="true" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/debugger/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+        <state relative-caret-position="345">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
           <folding>
             <element signature="e#36#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/snabbdom.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="279" column="7" lean-forward="true" selection-start-line="279" selection-start-column="7" selection-end-line="279" selection-end-column="7" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#36#76#0" expanded="true" />
           </folding>
         </state>
       </provider>

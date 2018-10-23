@@ -17,6 +17,7 @@ function sameVnode(vnode1: VNode, vnode2: VNode): boolean {
   return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel;
 }
 
+// 如果 sel 不为空 视为有效的 vnode
 function isVnode(vnode: any): vnode is VNode {
   return vnode.sel !== undefined;
 }
@@ -43,7 +44,9 @@ function createKeyToOldIdx(children: Array<VNode>, beginIdx: number, endIdx: num
 
 const hooks: (keyof Module)[] = ['create', 'update', 'remove', 'destroy', 'pre', 'post'];
 
+// VNode -> { sel, data, children, text, elm, key }
 export {h} from './h';
+
 export {thunk} from './thunk';
 
 export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
@@ -61,9 +64,8 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
   }
 
-  // 创建空节点
+  // 创建空VNode节点 标签名会带上`id` 和 `classname`
   function emptyNodeAt(elm: Element) {
-    // 标签名会带上id和classname
     const id = elm.id ? '#' + elm.id : '';
     const c = elm.className ? '.' + elm.className.split(' ').join('.') : '';
     return vnode(api.tagName(elm).toLowerCase() + id + c, {}, [], undefined, elm);
@@ -82,6 +84,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   // 创建DOM元素
   function createElm(vnode: VNode, insertedVnodeQueue: VNodeQueue): Node {
     let i: any, data = vnode.data;
+
     // 先判断有没有 data
     if (isDef(data)) {
       // 检查 data 里面有没有 init hook 有的话触发
@@ -91,8 +94,10 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
         data = vnode.data;
       }
     }
+
     // 寻找子节点和选择器
     let children = vnode.children, sel = vnode.sel;
+
     // 如果选择器是以 ! 开头的
     if (sel === '!') {
       // 检查 text 如果没定义的话 先把 text 变成空的
@@ -102,6 +107,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
       // 创建注释元素
       vnode.elm = api.createComment(vnode.text as string);
     }
+
     // 如果已经定义了选择器
     else if (isDef(sel)) {
       // Parse selector
@@ -136,6 +142,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
           }
         }
       }
+
       // 如果是 string 或者 number 直接创建文本节点
       else if (is.primitive(vnode.text)) {
         api.appendChild(elm, api.createTextNode(vnode.text));
@@ -143,11 +150,13 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
       i = (vnode.data as VNodeData).hook; // Reuse variable
 
-      // 确认是否有 create 或者 insert 勾子
+      // 确认是否有 create 或者 insert 勾子 有的话
+      // 往 insertedVnodeQueue 里面丢 到时候还要统一触发钩子呀 ~
       if (isDef(i)) {
         if (i.create) i.create(emptyNode, vnode);
         if (i.insert) insertedVnodeQueue.push(vnode);
       }
+
     }
     // 如果没有选择器 创建文本节点 -> 非 h 创建的元素
     else {
@@ -217,7 +226,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
   }
 
-  // 更新子元素 -> Diff 算法在这里
+  // 更新子元素
   function updateChildren(parentElm: Node,
                           oldCh: Array<VNode>,
                           newCh: Array<VNode>,
@@ -256,15 +265,21 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
         newStartVnode = newCh[++newStartIdx];
       } else if (newEndVnode == null) {
         newEndVnode = newCh[--newEndIdx];
-      } else if (sameVnode(oldStartVnode, newStartVnode)) {
+      }
+      // 首节点一致 指针都后移 更新这两个VNode元素
+      else if (sameVnode(oldStartVnode, newStartVnode)) {
         patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
         oldStartVnode = oldCh[++oldStartIdx];
         newStartVnode = newCh[++newStartIdx];
-      } else if (sameVnode(oldEndVnode, newEndVnode)) {
+      }
+      // 尾节点一致 指针都前移 更新这两个VNode元素
+      else if (sameVnode(oldEndVnode, newEndVnode)) {
         patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);
         oldEndVnode = oldCh[--oldEndIdx];
         newEndVnode = newCh[--newEndIdx];
-      } else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
+      }
+      // 如果旧的开始节点和新的结束节点一致 -> vnode 右移
+      else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
         patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
         api.insertBefore(parentElm, oldStartVnode.elm as Node, api.nextSibling(oldEndVnode.elm as Node));
         oldStartVnode = oldCh[++oldStartIdx];
@@ -308,30 +323,35 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   // patch (更新) 节点
   function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
     let i: any, hook: any;
-    // 判断是否包含了 prepatch 勾子
+
+    // 判断是否包含了 prepatch 勾子 如果有调用这个钩子
     if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
       i(oldVnode, vnode);
     }
+
+    // 从旧VNode获取element元素 并且添加到新的VNode.elm属性里
+    // 因为逻辑上来说 旧的VNode 一般是真实存在的Dom 元素 肯定是有 element属性的
     const elm = vnode.elm = (oldVnode.elm as Node);
 
-    // Children
+    // 获取 新旧VNode的 children
     let oldCh = oldVnode.children;
     let ch = vnode.children;
 
-    // 如果全等 不更新
+    // 如果新旧节点一致 停止操作
     if (oldVnode === vnode) return;
 
-    // 如果 vnode 包含 data
+    // 如果 vnode 定义了 data
     if (vnode.data !== undefined) {
-      // 更新模块的 update hook
+
+      // 触发 update hook -> update hook 来自module
       for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
 
-      // 获取 hook -> 判断节点有没有自带 update hook
+      // 这里的 update hook 是 用户自己编写的 update hook 了。 非 module
       i = vnode.data.hook;
       if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode);
     }
 
-    // 如果没有定义 text
+    // 如果新的VNode没有定义 text
     if (isUndef(vnode.text)) {
       // 判断 `旧节点子元素` 和 `新节点子元素` 是否存在
       if (isDef(oldCh) && isDef(ch)) {
@@ -351,6 +371,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
             insertedVnodeQueue)
         ;
       }
+
       // 判断是否定义了 `旧节点子元素` 有的话 需要移除
       else if (isDef(oldCh)) {
         removeVnodes(elm, oldCh as Array<VNode>, 0, (oldCh as Array<VNode>).length - 1);
@@ -361,9 +382,12 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
       }
     }
 
+    // text 不一致 需要更新 text
     else if (oldVnode.text !== vnode.text) {
       api.setTextContent(elm, vnode.text as string);
     }
+
+    // 如果有 postpatch 钩子需要触发一次
     if (isDef(hook) && isDef(i = hook.postpatch)) {
       i(oldVnode, vnode);
     }
@@ -372,8 +396,10 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   // 渲染 VNode 传入 oldVNode 和一个新的VNode , 返回VNode
   return function patch(oldVnode: VNode | Element, vnode: VNode): VNode {
     let i: number, elm: Node, parent: Node;
-    // 已插入的 VNode 队列
+
+    // 已插入到DOM的VNode列表  -> 这个东西主要是拿来收集需要触发 insert 钩子的
     const insertedVnodeQueue: VNodeQueue = [];
+
     // pre hook
     for (i = 0; i < cbs.pre.length; ++i) cbs.pre[i]();
 
@@ -381,23 +407,28 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     if (!isVnode(oldVnode)) {
       oldVnode = emptyNodeAt(oldVnode);
     }
-    // 判断节点是否一致
+
+    // 判断节点是否一致 通过判断 sel 是否一样 一样就 patchVnode
     if (sameVnode(oldVnode, vnode)) {
       patchVnode(oldVnode, vnode, insertedVnodeQueue);
     }
-    // 否则创建新节点
+
+    // 如果 selector 不一致 找到旧VNode 的 element
     else {
       elm = oldVnode.elm as Node;
       parent = api.parentNode(elm);
 
       createElm(vnode, insertedVnodeQueue);
 
+      // 如果父节点存在 (话说什么时候会不存在啊。。) 把旧的结点移除掉 ... 然后加入新的节点
       if (parent !== null) {
         api.insertBefore(parent, vnode.elm as Node, api.nextSibling(elm));
         removeVnodes(parent, [oldVnode], 0, 0);
       }
     }
 
+    // an element has been inserted into the DOM
+    // 已经插入到DOM里面的VNode
     for (i = 0; i < insertedVnodeQueue.length; ++i) {
       (((insertedVnodeQueue[i].data as VNodeData).hook as Hooks).insert as any)(insertedVnodeQueue[i]);
     }

@@ -39,6 +39,7 @@ function createListener() {
         handleEvent(event, handler.vnode);
     };
 }
+// 更新绑定的事件
 function updateEventListeners(oldVnode, vnode) {
     var oldOn = oldVnode.data.on, oldListener = oldVnode.listener, oldElm = oldVnode.elm, on = vnode && vnode.data.on, elm = (vnode && vnode.elm), name;
     // optimization for reused immutable handlers

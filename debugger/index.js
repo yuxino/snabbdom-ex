@@ -19,21 +19,21 @@ var h = snabbdom.h;
 
 var container = document.getElementById("container");
 
-// var vnode = h(
-//   "div#container",
-//   {
-//     on: { click: () => console.log("on click") },
-//     class: { a: true },
-//     dataset: {action: 'reset'}
-//   },
-//   [
-//     h("span", { style: { fontWeight: "bold", transition: 'opacity 1s' , remove: { opacity: '0'} } }, "This is bold"),
-//     " and this is just normal text",
-//     h("a", { props: { href: "/foo" } }, "I'll take you places!")
-//   ]
-// );
+var vnode = h(
+  "div#container",
+  {
+    on: { click: () => console.log("on click") },
+    class: { a: true },
+    dataset: {action: 'reset'}
+  },
+  [
+    h("span", { style: { fontWeight: "bold", transition: 'opacity 1s' , remove: { opacity: '0'} } }, "This is bold"),
+    " and this is just normal text",
+    h("a", { props: { href: "/foo" } }, "I'll take you places!")
+  ]
+);
 
-var vnode = <div key="b">123</div>
+// var vnode = <div key="">123</div>
 
 // Patch into empty DOM element – this modifies the DOM as a side effect
 patch(container, vnode);
