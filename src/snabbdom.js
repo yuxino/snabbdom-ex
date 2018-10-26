@@ -6,7 +6,7 @@ var htmldomapi_1 = require("./htmldomapi");
 function isUndef(s) { return s === undefined; }
 function isDef(s) { return s !== undefined; }
 var emptyNode = vnode_1["default"]('', {}, [], undefined, undefined);
-// 判断 key 和 sel 是否一致
+// 判断 key 和 sel 是否一致 (selector 其实也就是标签 或者说元素)
 function sameVnode(vnode1, vnode2) {
     return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel;
 }
@@ -35,6 +35,7 @@ exports.thunk = thunk_1.thunk;
 function init(modules, domApi) {
     var i, j, cbs = {};
     var api = domApi !== undefined ? domApi : htmldomapi_1["default"];
+    // 初始化模块
     for (i = 0; i < hooks.length; ++i) {
         cbs[hooks[i]] = [];
         for (j = 0; j < modules.length; ++j) {
@@ -134,7 +135,9 @@ function init(modules, domApi) {
         // 返回节点
         return vnode.elm;
     }
+    // 添加新的子节点
     function addVnodes(parentElm, before, vnodes, startIdx, endIdx, insertedVnodeQueue) {
+        console.log(startIdx, endIdx);
         for (; startIdx <= endIdx; ++startIdx) {
             var ch = vnodes[startIdx];
             if (ch != null) {
@@ -160,6 +163,7 @@ function init(modules, domApi) {
             }
         }
     }
+    // 删除旧的子节点
     function removeVnodes(parentElm, vnodes, startIdx, endIdx) {
         for (; startIdx <= endIdx; ++startIdx) {
             var i_1 = void 0, listeners = void 0, rm = void 0, ch = vnodes[startIdx];
@@ -206,6 +210,7 @@ function init(modules, domApi) {
         var before;
         // 对比两个列表
         while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+            console.log('...');
             if (oldStartVnode == null) {
                 oldStartVnode = oldCh[++oldStartIdx]; // Vnode might have been moved left
             }
@@ -231,20 +236,25 @@ function init(modules, domApi) {
                 newEndVnode = newCh[--newEndIdx];
             }
             // 如果旧的开始节点和新的结束节点一致 -> vnode 右移
-            else if (sameVnode(oldStartVnode, newEndVnode)) { // Vnode moved right
+            // 插入新节点
+            else if (sameVnode(oldStartVnode, newEndVnode)) { // VNode moved right
                 patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
                 api.insertBefore(parentElm, oldStartVnode.elm, api.nextSibling(oldEndVnode.elm));
                 oldStartVnode = oldCh[++oldStartIdx];
                 newEndVnode = newCh[--newEndIdx];
             }
-            else if (sameVnode(oldEndVnode, newStartVnode)) { // Vnode moved left
+            // 如果新的开始节点和旧的结束节点一致 -> vnode 左移
+            // 插入新节点
+            else if (sameVnode(oldEndVnode, newStartVnode)) { // VNode moved left
                 patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
                 api.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
                 oldEndVnode = oldCh[--oldEndIdx];
                 newStartVnode = newCh[++newStartIdx];
             }
+            // 这个判断不知道做了什么 ... 始终都没有进来过
             else {
                 if (oldKeyToIdx === undefined) {
+                    // 建立旧VNode自元素Idx映射表
                     oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
                 }
                 idxInOld = oldKeyToIdx[newStartVnode.key];
@@ -266,11 +276,14 @@ function init(modules, domApi) {
                 }
             }
         }
+        // 当上面的对比结束以后 <> 不同标签的元素会被视为是新增的元素
         if (oldStartIdx <= oldEndIdx || newStartIdx <= newEndIdx) {
+            // 如果 start 指针 大于 end 指针 说明有新增加的元素
             if (oldStartIdx > oldEndIdx) {
                 before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].elm;
                 addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
             }
+            // 如果 start 小于 end 指针 说明我们需要删除元素
             else {
                 removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
             }
