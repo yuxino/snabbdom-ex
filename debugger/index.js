@@ -11,26 +11,23 @@ var patch = snabbdom.init([
   classModule,
   propsModule,
   styleModule,
-  listenersModule,
+  listenersModule
 ]);
 var h = snabbdom.h;
 
 var container = document.getElementById("container");
 
-var vnode = h(
-  "div#container",
-  [
-    h("h2", "This is bold"),
-    " and this is just normal text"
-  ]
-);
+var vnode = h("div#container", [
+  h("h2", "This is bold"),
+  " and this is just normal text"
+]);
 
 vnode = patch(container, vnode);
 
 var newVnode = h("div#container", [
-    h("div", "This is bold"),
-    " and this is just normal text",
-    h("h2", "I'll take you places!")
-])
+  h("div", "This is bold"),
+  " and this is just normal text",
+  h("h2", "I'll take you places!")
+]);
 
 patch(vnode, newVnode);

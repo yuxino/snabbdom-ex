@@ -3,10 +3,10 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./debugger/index.js",
+  entry: "./ex/index.ts",
   devtool: "inline-source-map",
   output: {
-    path: __dirname + "/dist",
+    path: __dirname + "/ex-dist",
     filename: "index_debugger_bundle.js"
   },
   resolve: {
@@ -33,7 +33,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./debugger/index.html"
+      template: "./ex/index.html"
     })
   ]
 };

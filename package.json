@@ -1,12 +1,13 @@
 {
-  "name": "debugger-template",
+  "name": "snabbdom-ex",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:kirakira-template/debugger-template.git",
   "author": "-A- <nbsawz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --open --port 3212"
+    "start": "webpack-dev-server --open --port 3212",
+    "start:ex": "webpack-dev-server --open --port 3213 --config webpack.ex.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

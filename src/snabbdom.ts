@@ -1,16 +1,20 @@
 /* global module, document, Node */
-import {Module} from './modules/module';
-import {Hooks} from './hooks';
-import vnode, {VNode, VNodeData, Key} from './vnode';
-import * as is from './is';
-import htmlDomApi, {DOMAPI} from './htmldomapi';
+import { Module } from "./modules/module";
+import { Hooks } from "./hooks";
+import vnode, { VNode, VNodeData, Key } from "./vnode";
+import * as is from "./is";
+import htmlDomApi, { DOMAPI } from "./htmldomapi";
 
-function isUndef(s: any): boolean { return s === undefined; }
-function isDef(s: any): boolean { return s !== undefined; }
+function isUndef(s: any): boolean {
+  return s === undefined;
+}
+function isDef(s: any): boolean {
+  return s !== undefined;
+}
 
 type VNodeQueue = Array<VNode>;
 
-const emptyNode = vnode('', {}, [], undefined, undefined);
+const emptyNode = vnode("", {}, [], undefined, undefined);
 
 // 判断 key 和 sel 是否一致 (selector 其实也就是标签 或者说元素)
 function sameVnode(vnode1: VNode, vnode2: VNode): boolean {
@@ -22,16 +26,21 @@ function isVnode(vnode: any): vnode is VNode {
   return vnode.sel !== undefined;
 }
 
-type KeyToIndexMap = {[key: string]: number};
+type KeyToIndexMap = { [key: string]: number };
 
-type ArraysOf<T> = {
-  [K in keyof T]: (T[K])[];
-}
+type ArraysOf<T> = { [K in keyof T]: (T[K])[] };
 
 type ModuleHooks = ArraysOf<Module>;
 
-function createKeyToOldIdx(children: Array<VNode>, beginIdx: number, endIdx: number): KeyToIndexMap {
-  let i: number, map: KeyToIndexMap = {}, key: Key | undefined, ch;
+function createKeyToOldIdx(
+  children: Array<VNode>,
+  beginIdx: number,
+  endIdx: number
+): KeyToIndexMap {
+  let i: number,
+    map: KeyToIndexMap = {},
+    key: Key | undefined,
+    ch;
   for (i = beginIdx; i <= endIdx; ++i) {
     ch = children[i];
     if (ch != null) {
@@ -42,15 +51,24 @@ function createKeyToOldIdx(children: Array<VNode>, beginIdx: number, endIdx: num
   return map;
 }
 
-const hooks: (keyof Module)[] = ['create', 'update', 'remove', 'destroy', 'pre', 'post'];
+const hooks: (keyof Module)[] = [
+  "create",
+  "update",
+  "remove",
+  "destroy",
+  "pre",
+  "post"
+];
 
 // VNode -> { sel, data, children, text, elm, key }
-export {h} from './h';
+export { h } from "./h";
 
-export {thunk} from './thunk';
+export { thunk } from "./thunk";
 
 export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
-  let i: number, j: number, cbs = ({} as ModuleHooks);
+  let i: number,
+    j: number,
+    cbs = {} as ModuleHooks;
 
   const api: DOMAPI = domApi !== undefined ? domApi : htmlDomApi;
 
@@ -67,13 +85,19 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
   // 创建空VNode节点 标签名会带上`id` 和 `classname`
   function emptyNodeAt(elm: Element) {
-    const id = elm.id ? '#' + elm.id : '';
-    const c = elm.className ? '.' + elm.className.split(' ').join('.') : '';
-    return vnode(api.tagName(elm).toLowerCase() + id + c, {}, [], undefined, elm);
+    const id = elm.id ? "#" + elm.id : "";
+    const c = elm.className ? "." + elm.className.split(" ").join(".") : "";
+    return vnode(
+      api.tagName(elm).toLowerCase() + id + c,
+      {},
+      [],
+      undefined,
+      elm
+    );
   }
 
   // 通过父级删除子元素
-  function createRmCb (childElm: Node, listeners: number) {
+  function createRmCb(childElm: Node, listeners: number) {
     return function rmCb() {
       if (--listeners === 0) {
         const parent = api.parentNode(childElm);
@@ -84,12 +108,13 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
   // 创建DOM元素
   function createElm(vnode: VNode, insertedVnodeQueue: VNodeQueue): Node {
-    let i: any, data = vnode.data;
+    let i: any,
+      data = vnode.data;
 
     // 先判断有没有 data
     if (isDef(data)) {
       // 检查 data 里面有没有 init hook 有的话触发
-      if (isDef(i = data.hook) && isDef(i = i.init)) {
+      if (isDef((i = data.hook)) && isDef((i = i.init))) {
         i(vnode);
         // 这里可能会对 data 做一些其他的处理 所以更新一下
         data = vnode.data;
@@ -97,13 +122,14 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
 
     // 寻找子节点和选择器
-    let children = vnode.children, sel = vnode.sel;
+    let children = vnode.children,
+      sel = vnode.sel;
 
     // 如果选择器是以 ! 开头的
-    if (sel === '!') {
+    if (sel === "!") {
       // 检查 text 如果没定义的话 先把 text 变成空的
       if (isUndef(vnode.text)) {
-        vnode.text = '';
+        vnode.text = "";
       }
       // 创建注释元素
       vnode.elm = api.createComment(vnode.text as string);
@@ -112,23 +138,29 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     // 如果已经定义了选择器
     else if (isDef(sel)) {
       // Parse selector
-      const hashIdx = sel.indexOf('#');
-      const dotIdx = sel.indexOf('.', hashIdx);
+      const hashIdx = sel.indexOf("#");
+      const dotIdx = sel.indexOf(".", hashIdx);
 
       const hash = hashIdx > 0 ? hashIdx : sel.length;
       const dot = dotIdx > 0 ? dotIdx : sel.length;
 
       // 取最短 就是标签名 <-
-      const tag = hashIdx !== -1 || dotIdx !== -1 ? sel.slice(0, Math.min(hash, dot)) : sel;
+      const tag =
+        hashIdx !== -1 || dotIdx !== -1
+          ? sel.slice(0, Math.min(hash, dot))
+          : sel;
 
       // 创建元素
-      const elm = vnode.elm = isDef(data) && isDef(i = (data as VNodeData).ns) ? api.createElementNS(i, tag)
-                                                                               : api.createElement(tag);
+      const elm = (vnode.elm =
+        isDef(data) && isDef((i = (data as VNodeData).ns))
+          ? api.createElementNS(i, tag)
+          : api.createElement(tag));
 
       // 书写顺序是 # 然后 . 所以先取# 再取 .
-      if (hash < dot) elm.setAttribute('id', sel.slice(hash + 1, dot));
+      if (hash < dot) elm.setAttribute("id", sel.slice(hash + 1, dot));
       // 把 每个. 替换成空格
-      if (dotIdx > 0) elm.setAttribute('class', sel.slice(dot + 1).replace(/\./g, ' '));
+      if (dotIdx > 0)
+        elm.setAttribute("class", sel.slice(dot + 1).replace(/\./g, " "));
 
       // 触发 create 勾子
       for (i = 0; i < cbs.create.length; ++i) cbs.create[i](emptyNode, vnode);
@@ -157,7 +189,6 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
         if (i.create) i.create(emptyNode, vnode);
         if (i.insert) insertedVnodeQueue.push(vnode);
       }
-
     }
     // 如果没有选择器 创建文本节点 -> 非 h 创建的元素
     else {
@@ -168,13 +199,15 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   }
 
   // 添加新的子节点
-  function addVnodes(parentElm: Node,
-                     before: Node | null,
-                     vnodes: Array<VNode>,
-                     startIdx: number,
-                     endIdx: number,
-                     insertedVnodeQueue: VNodeQueue) {
-    console.log(startIdx, endIdx)
+  function addVnodes(
+    parentElm: Node,
+    before: Node | null,
+    vnodes: Array<VNode>,
+    startIdx: number,
+    endIdx: number,
+    insertedVnodeQueue: VNodeQueue
+  ) {
+    console.log(startIdx, endIdx);
     for (; startIdx <= endIdx; ++startIdx) {
       const ch = vnodes[startIdx];
       if (ch != null) {
@@ -185,9 +218,11 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
   // 调用destroy 钩子的时候也需要触发 子组件的 destroy 钩子
   function invokeDestroyHook(vnode: VNode) {
-    let i: any, j: number, data = vnode.data;
+    let i: any,
+      j: number,
+      data = vnode.data;
     if (data !== undefined) {
-      if (isDef(i = data.hook) && isDef(i = i.destroy)) i(vnode);
+      if (isDef((i = data.hook)) && isDef((i = i.destroy))) i(vnode);
       for (i = 0; i < cbs.destroy.length; ++i) cbs.destroy[i](vnode);
       if (vnode.children !== undefined) {
         for (j = 0; j < vnode.children.length; ++j) {
@@ -201,12 +236,17 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   }
 
   // 删除旧的子节点
-  function removeVnodes(parentElm: Node,
-                        vnodes: Array<VNode>,
-                        startIdx: number,
-                        endIdx: number): void {
+  function removeVnodes(
+    parentElm: Node,
+    vnodes: Array<VNode>,
+    startIdx: number,
+    endIdx: number
+  ): void {
     for (; startIdx <= endIdx; ++startIdx) {
-      let i: any, listeners: number, rm: () => void, ch = vnodes[startIdx];
+      let i: any,
+        listeners: number,
+        rm: () => void,
+        ch = vnodes[startIdx];
       if (ch != null) {
         // 普通的元素都有 selector
         if (isDef(ch.sel)) {
@@ -215,15 +255,19 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
           rm = createRmCb(ch.elm as Node, listeners);
 
           for (i = 0; i < cbs.remove.length; ++i) cbs.remove[i](ch, rm);
-          if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
+          if (
+            isDef((i = ch.data)) &&
+            isDef((i = i.hook)) &&
+            isDef((i = i.remove))
+          ) {
             i(ch, rm);
           } else {
             rm();
           }
-
         }
         // 没有的会被认为是文本节点
-        else { // Text node
+        else {
+          // Text node
           api.removeChild(parentElm, ch.elm as Node);
         }
       }
@@ -231,11 +275,12 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   }
 
   // 更新子元素
-  function updateChildren(parentElm: Node,
-                          oldCh: Array<VNode>,
-                          newCh: Array<VNode>,
-                          insertedVnodeQueue: VNodeQueue) {
-
+  function updateChildren(
+    parentElm: Node,
+    oldCh: Array<VNode>,
+    newCh: Array<VNode>,
+    insertedVnodeQueue: VNodeQueue
+  ) {
     // 开始
     let oldStartIdx = 0;
     let newStartIdx = 0;
@@ -261,7 +306,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
     // 对比两个列表
     while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
-      console.log('...')
+      console.log("...");
       if (oldStartVnode == null) {
         oldStartVnode = oldCh[++oldStartIdx]; // Vnode might have been moved left
       } else if (oldEndVnode == null) {
@@ -285,17 +330,27 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
       }
       // 如果旧的开始节点和新的结束节点一致 -> vnode 右移
       // 插入新节点
-      else if (sameVnode(oldStartVnode, newEndVnode)) { // VNode moved right
+      else if (sameVnode(oldStartVnode, newEndVnode)) {
+        // VNode moved right
         patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);
-        api.insertBefore(parentElm, oldStartVnode.elm as Node, api.nextSibling(oldEndVnode.elm as Node));
+        api.insertBefore(
+          parentElm,
+          oldStartVnode.elm as Node,
+          api.nextSibling(oldEndVnode.elm as Node)
+        );
         oldStartVnode = oldCh[++oldStartIdx];
         newEndVnode = newCh[--newEndIdx];
       }
       // 如果新的开始节点和旧的结束节点一致 -> vnode 左移
       // 插入新节点
-      else if (sameVnode(oldEndVnode, newStartVnode)) { // VNode moved left
+      else if (sameVnode(oldEndVnode, newStartVnode)) {
+        // VNode moved left
         patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
-        api.insertBefore(parentElm, oldEndVnode.elm as Node, oldStartVnode.elm as Node);
+        api.insertBefore(
+          parentElm,
+          oldEndVnode.elm as Node,
+          oldStartVnode.elm as Node
+        );
         oldEndVnode = oldCh[--oldEndIdx];
         newStartVnode = newCh[++newStartIdx];
       }
@@ -306,17 +361,30 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
           oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
         }
         idxInOld = oldKeyToIdx[newStartVnode.key as string];
-        if (isUndef(idxInOld)) { // New element
-          api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm as Node);
+        if (isUndef(idxInOld)) {
+          // New element
+          api.insertBefore(
+            parentElm,
+            createElm(newStartVnode, insertedVnodeQueue),
+            oldStartVnode.elm as Node
+          );
           newStartVnode = newCh[++newStartIdx];
         } else {
           elmToMove = oldCh[idxInOld];
           if (elmToMove.sel !== newStartVnode.sel) {
-            api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm as Node);
+            api.insertBefore(
+              parentElm,
+              createElm(newStartVnode, insertedVnodeQueue),
+              oldStartVnode.elm as Node
+            );
           } else {
             patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
             oldCh[idxInOld] = undefined as any;
-            api.insertBefore(parentElm, (elmToMove.elm as Node), oldStartVnode.elm as Node);
+            api.insertBefore(
+              parentElm,
+              elmToMove.elm as Node,
+              oldStartVnode.elm as Node
+            );
           }
           newStartVnode = newCh[++newStartIdx];
         }
@@ -324,12 +392,19 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
     // 当上面的对比结束以后 <> 不同标签的元素会被视为是新增的元素
     if (oldStartIdx <= oldEndIdx || newStartIdx <= newEndIdx) {
-      // 如果 start 指针 大于 end 指针 说明有新增加的元素
+      // 如果旧的节点表 还有剩余的 需要把他们加进来
       if (oldStartIdx > oldEndIdx) {
-        before = newCh[newEndIdx+1] == null ? null : newCh[newEndIdx+1].elm;
-        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
+        before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].elm;
+        addVnodes(
+          parentElm,
+          before,
+          newCh,
+          newStartIdx,
+          newEndIdx,
+          insertedVnodeQueue
+        );
       }
-      // 如果 start 小于 end 指针 说明我们需要删除元素
+      // 这里只会有一种情况 就是旧的节点表里面存在多余的节点 我们需要删除掉
       else {
         removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
       }
@@ -337,17 +412,25 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   }
 
   // patch (更新) 节点
-  function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
+  function patchVnode(
+    oldVnode: VNode,
+    vnode: VNode,
+    insertedVnodeQueue: VNodeQueue
+  ) {
     let i: any, hook: any;
 
     // 判断是否包含了 prepatch 勾子 如果有调用这个钩子
-    if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
+    if (
+      isDef((i = vnode.data)) &&
+      isDef((hook = i.hook)) &&
+      isDef((i = hook.prepatch))
+    ) {
       i(oldVnode, vnode);
     }
 
     // 从旧VNode获取element元素 并且添加到新的VNode.elm属性里
     // 因为逻辑上来说 旧的VNode 一般是真实存在的Dom 元素 肯定是有 element属性的
-    const elm = vnode.elm = (oldVnode.elm as Node);
+    const elm = (vnode.elm = oldVnode.elm as Node);
 
     // 获取 新旧VNode的 children
     let oldCh = oldVnode.children;
@@ -358,43 +441,51 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
 
     // 如果 vnode 定义了 data
     if (vnode.data !== undefined) {
-
       // 触发 update hook -> update hook 来自module
       for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
 
       // 这里的 update hook 是 用户自己编写的 update hook 了。 非 module
       i = vnode.data.hook;
-      if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode);
+      if (isDef(i) && isDef((i = i.update))) i(oldVnode, vnode);
     }
 
-    // 如果新的VNode没有定义 text
+    // 如果新Vnode节点的text是否为undefined
     if (isUndef(vnode.text)) {
-      // 判断 `旧节点子元素` 和 `新节点子元素` 是否存在
+      // 如果oldCh 和 ch 存在 我们需要更新子元素
       if (isDef(oldCh) && isDef(ch)) {
-        if (oldCh !== ch) updateChildren(elm, oldCh as Array<VNode>, ch as Array<VNode>, insertedVnodeQueue);
-      }
-      else if (isDef(ch)) {
-        // 判断是否定义了 `子元素`
-        // 有的话需要添加 VNode 节点
-        // 判断`旧节点`是否存在 `text` 存在需要清空文本
-        if (isDef(oldVnode.text)) api.setTextContent(elm, '');
-        addVnodes(
+        if (oldCh !== ch)
+          updateChildren(
             elm,
-            null,
+            oldCh as Array<VNode>,
             ch as Array<VNode>,
-            0,
-            (ch as Array<VNode>).length - 1,
-            insertedVnodeQueue)
-        ;
+            insertedVnodeQueue
+          );
+      }
+      // 如果只定义了 ch 增加新的元素
+      else if (isDef(ch)) {
+        if (isDef(oldVnode.text)) api.setTextContent(elm, "");
+        addVnodes(
+          elm,
+          null,
+          ch as Array<VNode>,
+          0,
+          (ch as Array<VNode>).length - 1,
+          insertedVnodeQueue
+        );
       }
 
-      // 判断是否定义了 `旧节点子元素` 有的话 需要移除
+      // 如果只定义了oldCh 移除掉旧的元素
       else if (isDef(oldCh)) {
-        removeVnodes(elm, oldCh as Array<VNode>, 0, (oldCh as Array<VNode>).length - 1);
+        removeVnodes(
+          elm,
+          oldCh as Array<VNode>,
+          0,
+          (oldCh as Array<VNode>).length - 1
+        );
       }
-
+      // 如果旧节点的text被定义了 需要插入一个空的textContent
       else if (isDef(oldVnode.text)) {
-        api.setTextContent(elm, '');
+        api.setTextContent(elm, "");
       }
     }
 
@@ -404,7 +495,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     }
 
     // 如果有 postpatch 钩子需要触发一次
-    if (isDef(hook) && isDef(i = hook.postpatch)) {
+    if (isDef(hook) && isDef((i = hook.postpatch))) {
       i(oldVnode, vnode);
     }
   }
@@ -446,7 +537,9 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
     // an element has been inserted into the DOM
     // 已经插入到DOM里面的VNode
     for (i = 0; i < insertedVnodeQueue.length; ++i) {
-      (((insertedVnodeQueue[i].data as VNodeData).hook as Hooks).insert as any)(insertedVnodeQueue[i]);
+      (((insertedVnodeQueue[i].data as VNodeData).hook as Hooks).insert as any)(
+        insertedVnodeQueue[i]
+      );
     }
     for (i = 0; i < cbs.post.length; ++i) cbs.post[i]();
     return vnode;
